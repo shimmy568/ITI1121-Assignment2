@@ -9,8 +9,9 @@
 
 public class DotInfo {
 
-     // ADD YOUR INSTANCE VARIABLES HERE
-
+    private int x, y, neighboringMines;
+    private boolean mined, covered, wasClicked;
+    
 
     /**
      * Constructor, used to initialize the instance variables
@@ -21,9 +22,9 @@ public class DotInfo {
      *            the y coordinate
      */
     public DotInfo(int x, int y){
-
-    // ADD YOU CODE HERE
-
+        this.x = x;
+        this.y = y;
+        this.covered = true;
     }
 
     /**
@@ -32,9 +33,7 @@ public class DotInfo {
      * @return the value of the attribute x
      */
     public int getX(){
-
-    // ADD YOU CODE HERE
-
+        return this.x;
     }
     
     /**
@@ -43,9 +42,7 @@ public class DotInfo {
      * @return the value of the attribute y
      */
     public int getY(){
-
-    // ADD YOU CODE HERE
-
+        return this.y;
     }
     
  
@@ -53,9 +50,7 @@ public class DotInfo {
      * Setter for mined
      */
     public void setMined() {
-
-    // ADD YOU CODE HERE
-
+        this.mined = true;
     }
 
     /**
@@ -64,9 +59,7 @@ public class DotInfo {
      * @return mined
      */
     public boolean isMined() {
-
-    // ADD YOU CODE HERE
-
+        return this.mined;
     }
 
 
@@ -74,9 +67,7 @@ public class DotInfo {
      * Setter for covered
      */
     public void uncover() {
-
-    // ADD YOU CODE HERE
-
+        this.covered = false;
     }
 
     /**
@@ -85,9 +76,7 @@ public class DotInfo {
      * @return covered
      */
     public boolean isCovered(){
-
-    // ADD YOU CODE HERE
-
+        return this.covered;
     }
 
 
@@ -96,9 +85,7 @@ public class DotInfo {
      * Setter for wasClicked
      */
     public void click() {
-
-    // ADD YOU CODE HERE
-
+        this.wasClicked = true;
     }
 
 
@@ -108,33 +95,27 @@ public class DotInfo {
      * @return wasClicked
      */
     public boolean hasBeenClicked() {
-
-    // ADD YOU CODE HERE
-
+        return this.wasClicked;
     }
 
 
     /**
-     * Setter for neighbooringMines
+     * Setter for neighboringMines
      *
-     * @param neighbooringMines
+     * @param neighboringMines
      *          number of neighbooring mines
      */
-    public void setNeighbooringMines(int neighbooringMines) {
-
-    // ADD YOU CODE HERE
-
+    public void setNeighboringMines(int neighboringMines) {
+        this.neighboringMines = neighboringMines;
     }
 
     /**
-     * Get for neighbooringMines
+     * Get for neighboringMines
      *
-     * @return neighbooringMines
+     * @return neighboringMines
      */
-    public int getNeighbooringMines() {
-
-    // ADD YOU CODE HERE
-
+    public int getNeighboringMines() {
+        return this.neighboringMines;
     }
 
  }
