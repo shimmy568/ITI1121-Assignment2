@@ -16,7 +16,7 @@ import javax.swing.*;
 
 public class GameController implements ActionListener {
 
-    // ADD YOUR INSTANCE VARIABLES HERE
+    private GameModel model;
 
     /**
      * Constructor used for initializing the controller. It creates the game's view 
@@ -30,9 +30,7 @@ public class GameController implements ActionListener {
      *            the number of mines hidden in the board
      */
     public GameController(int width, int height, int numberOfMines) {
-
-    // ADD YOU CODE HERE
-
+        this.model = new GameModel(width, height, numberOfMines);
     }
 
 
@@ -53,9 +51,7 @@ public class GameController implements ActionListener {
      * resets the game
      */
     private void reset(){
-
-    // ADD YOU CODE HERE
-
+        this.model.reset();
     }
 
     /**
@@ -66,12 +62,12 @@ public class GameController implements ActionListener {
      * It then checks if the game
      * is finished, and if so, congratulates the player, showing the number of
      * moves, and gives to options: start a new game, or exit
-     * @param width
+     * @param x
      *            the selected column
-     * @param heigth
+     * @param y
      *            the selected line
      */
-    private void play(int width, int heigth){
+    private void play(int x, int y){
 
     // ADD YOU CODE HERE
 

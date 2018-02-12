@@ -7,7 +7,9 @@
  */
 public class Minesweeper {
 
-     // ADD YOUR INSTANCE VARIABLES HERE
+    private static final int DEFAULT_WIDTH = 9;
+    private static final int DEFAULT_HEIGTH = 9;
+    private static final int DEFAULT_MINES = 10;
 
    /**
      * <b>main</b> of the application. Creates the instance of  GameController 

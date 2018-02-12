@@ -13,8 +13,14 @@ import java.util.Random;
  * The controller can also update the model through Setters.
  * Finally, the model is also in charge of initializing the game
  *
- * @author Guy-Vincent Jourdan, University of Ottawa
+ * @author Owen Anderson
+ * Student number: 300011168
+ * Course: ITI 1121-A
+ * Assignment: 1
+ * Question: 2.3
+ *
  */
+
 public class GameModel {
 
 
