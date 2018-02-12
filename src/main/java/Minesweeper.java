@@ -3,7 +3,11 @@
 /**
  * The class <b>Mineseeper</b> launches the game
  *
- * @author Guy-Vincent Jourdan, University of Ottawa
+ * @author Owen Anderson
+ * Student number: 300011168
+ * Course: ITI 1121-A
+ * Assignment: 2
+ *
  */
 public class Minesweeper {
 

@@ -16,8 +16,7 @@ import java.util.Random;
  * @author Owen Anderson
  * Student number: 300011168
  * Course: ITI 1121-A
- * Assignment: 1
- * Question: 2.3
+ * Assignment: 2
  *
  */
 

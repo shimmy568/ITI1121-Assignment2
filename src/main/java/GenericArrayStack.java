@@ -1,35 +1,37 @@
+import java.util.LinkedList;
+
+/**
+ * A stack wrapper for the LinkedList object
+ * It allows for you to put in and take elements out in a last in first out manner
+ * 
+ * @author Owen Anderson
+ * Student number: 300011168
+ * Course: ITI 1121-A
+ * Assignment: 2
+ *
+ */
 public class GenericArrayStack<E> implements Stack<E> {
    
-   // ADD YOUR INSTANCE VARIABLES HERE
+    private LinkedList<E> stack;
 
    // Constructor
-    public GenericArrayStack( int capacity ) {
-        
-    // ADD YOU CODE HERE
-
+    public GenericArrayStack() {
+        this.stack = new LinkedList<E>();        
     }
 
     // Returns true if this ArrayStack is empty
     public boolean isEmpty() {
-        
-    // ADD YOU CODE HERE
-
+        return this.stack.size() == 0;        
     }
 
     public void push( E elem ) {
-        
-    // ADD YOU CODE HERE
-
+        this.stack.add(elem);        
     }
     public E pop() {
-        
-    // ADD YOU CODE HERE
-
+        return this.stack.pop();
     }
 
     public E peek() {
-        
-    // ADD YOU CODE HERE
-
+        return this.stack.peek();
     }
 }
