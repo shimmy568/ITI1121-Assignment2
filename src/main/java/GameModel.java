@@ -24,7 +24,7 @@ public class GameModel {
 
 
     private int width, height, numberOfMines, steps;
-
+    private Random generator;
     private DotInfo[][] board;
 
     /**
@@ -43,9 +43,67 @@ public class GameModel {
       this.width = width;
       this.height = heigth;
       this.numberOfMines = numberOfMines;
-
+      this.generator = new Random();
+      this.initializeBoard();
     }
     
+    private int[] pickPosition(){
+      int[] cords = new int[2];
+      cords[0] = this.generator.nextInt(this.width);
+      cords[1] = this.generator.nextInt(this.height);
+      return cords;
+    }
+
+    private void placeMine(int[] pos){
+      int x = pos[0];
+      int y = pos[1];
+      this.board[x][y].setMined();
+
+      boolean leftGood = false, rightGood = false, upGood = false, downGood = false;
+
+      if(y == 0){
+        this.board[x][y + 1].incrementNeighboringMines();
+        downGood = true;
+      } else if(y == this.width - 1){
+        this.board[x][y - 1].incrementNeighboringMines();
+        upGood = true;
+      } else {
+        this.board[x][y - 1].incrementNeighboringMines();
+        this.board[x][y + 1].incrementNeighboringMines();
+        upGood = true;
+        downGood = true;
+      }
+
+      if(x == 0) {
+        this.board[x + 1][y].incrementNeighboringMines();
+        rightGood = true;
+      } else if(x == this.height - 1){
+        this.board[x - 1][y].incrementNeighboringMines();
+        leftGood = true;
+      } else {
+        this.board[x - 1][y].incrementNeighboringMines();
+        this.board[x + 1][y].incrementNeighboringMines();
+        leftGood = true;
+        rightGood = true;
+      }
+
+      if(rightGood && downGood){
+        this.board[x + 1][y + 1].incrementNeighboringMines();
+      }
+
+      if(rightGood && upGood){
+        this.board[x + 1][y - 1].incrementNeighboringMines();
+      }
+
+      if(leftGood && downGood){
+        this.board[x - 1][y + 1].incrementNeighboringMines();
+      }
+
+      if(leftGood && upGood){
+        this.board[x - 1][y - 1].incrementNeighboringMines();
+      }
+    }
+
     private void initializeBoard(){
       this.board = new DotInfo[width][height];
 
@@ -53,6 +111,15 @@ public class GameModel {
       for(int i = 0; i < this.height; i++){
         for(int j = 0; j < this.width; j++){
           this.board[i][j] = new DotInfo(i, j);
+        }
+      }
+
+      int numTracker = this.numberOfMines;
+      while(numTracker > 0){
+        int[] pos = this.pickPosition();
+        if(!this.board[pos[0]][pos[1]].isMined()){
+          this.placeMine(pos);
+          numTracker--;
         }
       }
     }
@@ -261,7 +328,7 @@ public class GameModel {
     public String toString(){
         String output = "";
         for(int i = 0; i < this.width; i++){
-          for(int j = 0; i < this.height; j++){
+          for(int j = 0; j < this.height; j++){
             if(this.board[i][j].isMined()){
               output += "B ";
             } else {

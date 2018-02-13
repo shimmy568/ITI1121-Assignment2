@@ -110,6 +110,14 @@ public class DotInfo {
     }
 
     /**
+     * Just adds one to the instance varible that keeps track of the number of
+     * mines adjacent to the place
+     */
+    public void incrementNeighboringMines(){
+        this.neighboringMines++;
+    }
+
+    /**
      * Get for neighboringMines
      *
      * @return neighboringMines

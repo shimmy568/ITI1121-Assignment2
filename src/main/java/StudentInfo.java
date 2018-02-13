@@ -3,7 +3,11 @@
  * call to display the student information. Fill the box with your personal
  * information.
  * 
- * @author Marcel Turcotte (turcotte@eecs.uottawa.ca)
+ * @author Owen Anderson
+ * Student number: 300011168
+ * Course: ITI 1121-A
+ * Assignment: 2
+ *
  */
 
 public class StudentInfo {

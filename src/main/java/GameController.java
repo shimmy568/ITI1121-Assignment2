@@ -31,6 +31,7 @@ public class GameController implements ActionListener {
      */
     public GameController(int width, int height, int numberOfMines) {
         this.model = new GameModel(width, height, numberOfMines);
+        System.out.println(this.model.toString());
     }
 
 

@@ -4,7 +4,11 @@
  * that has been added onto the Stack, is the first one to
  * be removed.
  *
- * @author Marcel Turcotte
+ * @author Owen Anderson
+ * Student number: 300011168
+ * Course: ITI 1121-A
+ * Assignment: 2
+ *
  */
 
 public interface Stack<E> {
