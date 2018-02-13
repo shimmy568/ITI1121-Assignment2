@@ -82,10 +82,18 @@ public class GameController implements ActionListener {
      * had zero neighbouring mines
      */
     private void clearZone(DotInfo initialDot) {
-
-
-    // ADD YOU CODE HERE
-
+        GenericArrayStack<DotInfo> stack = new GenericArrayStack<DotInfo>(this.model.getHeigth() * this.model.getWidth());
+        stack.push(initialDot);
+        while(!stack.isEmpty()){
+            DotInfo cur = stack.pop();
+            cur.uncover();
+            if(cur.getNeighboringMines() == 0){
+                DotInfo[] adj = this.model.getAdjacent(cur.getX(), cur.getY());
+                for(int i = 0; i < adj.length; i++){
+                    stack.push(adj[i]);
+                }
+            }
+        }
     }
 
 

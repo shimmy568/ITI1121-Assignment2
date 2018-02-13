@@ -1,5 +1,3 @@
-
-
 /**
  * The class <b>Mineseeper</b> launches the game
  *
@@ -9,6 +7,7 @@
  * Assignment: 2
  *
  */
+
 public class Minesweeper {
 
     private static final int DEFAULT_WIDTH = 9;

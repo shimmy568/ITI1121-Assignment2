@@ -76,7 +76,7 @@ public class GameModel {
      * 
      * @return The adjacent spots
      */
-    private DotInfo[] getAdjacent(int x, int y) {
+    public DotInfo[] getAdjacent(int x, int y) {
         ArrayList<DotInfo> temp = new ArrayList<DotInfo>();
 
         boolean leftGood = false, rightGood = false, upGood = false, downGood = false;
