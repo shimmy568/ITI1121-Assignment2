@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 /**
@@ -22,7 +24,6 @@ import java.util.Random;
 
 public class GameModel {
 
-
     private int width, height, numberOfMines, steps;
     private Random generator;
     private DotInfo[][] board;
@@ -40,110 +41,132 @@ public class GameModel {
      *            the number of mines to hide in the board
      */
     public GameModel(int width, int heigth, int numberOfMines) {
-      this.width = width;
-      this.height = heigth;
-      this.numberOfMines = numberOfMines;
-      this.generator = new Random();
-      this.initializeBoard();
-    }
-    
-    private int[] pickPosition(){
-      int[] cords = new int[2];
-      cords[0] = this.generator.nextInt(this.width);
-      cords[1] = this.generator.nextInt(this.height);
-      return cords;
+        this.width = width;
+        this.height = heigth;
+        this.numberOfMines = numberOfMines;
+        this.generator = new Random();
+        this.initializeBoard();
     }
 
-    private void placeMine(int[] pos){
-      int x = pos[0];
-      int y = pos[1];
-      this.board[x][y].setMined();
-
-      boolean leftGood = false, rightGood = false, upGood = false, downGood = false;
-
-      if(y == 0){
-        this.board[x][y + 1].incrementNeighboringMines();
-        downGood = true;
-      } else if(y == this.width - 1){
-        this.board[x][y - 1].incrementNeighboringMines();
-        upGood = true;
-      } else {
-        this.board[x][y - 1].incrementNeighboringMines();
-        this.board[x][y + 1].incrementNeighboringMines();
-        upGood = true;
-        downGood = true;
-      }
-
-      if(x == 0) {
-        this.board[x + 1][y].incrementNeighboringMines();
-        rightGood = true;
-      } else if(x == this.height - 1){
-        this.board[x - 1][y].incrementNeighboringMines();
-        leftGood = true;
-      } else {
-        this.board[x - 1][y].incrementNeighboringMines();
-        this.board[x + 1][y].incrementNeighboringMines();
-        leftGood = true;
-        rightGood = true;
-      }
-
-      if(rightGood && downGood){
-        this.board[x + 1][y + 1].incrementNeighboringMines();
-      }
-
-      if(rightGood && upGood){
-        this.board[x + 1][y - 1].incrementNeighboringMines();
-      }
-
-      if(leftGood && downGood){
-        this.board[x - 1][y + 1].incrementNeighboringMines();
-      }
-
-      if(leftGood && upGood){
-        this.board[x - 1][y - 1].incrementNeighboringMines();
-      }
+    private int[] pickPosition() {
+        int[] cords = new int[2];
+        cords[0] = this.generator.nextInt(this.width);
+        cords[1] = this.generator.nextInt(this.height);
+        return cords;
     }
 
-    private void initializeBoard(){
-      this.board = new DotInfo[width][height];
+    private void placeMine(int[] pos) {
+        int x = pos[0];
+        int y = pos[1];
+        this.board[x][y].setMined();
 
-      // Init DotInfo objects
-      for(int i = 0; i < this.height; i++){
-        for(int j = 0; j < this.width; j++){
-          this.board[i][j] = new DotInfo(i, j);
+        //Gets all adjacent spots and adds one to their adjacent mine counter
+        DotInfo[] adj = this.getAdjacent(x, y);
+        for (int i = 0; i < adj.length; i++) {
+            adj[i].incrementNeighboringMines();
         }
-      }
-
-      int numTracker = this.numberOfMines;
-      while(numTracker > 0){
-        int[] pos = this.pickPosition();
-        if(!this.board[pos[0]][pos[1]].isMined()){
-          this.placeMine(pos);
-          numTracker--;
-        }
-      }
     }
- 
+
+    /**
+     * Gets all the adjacent DotInfo objects to a given x and y cord
+     * takes into account the border of the board
+     * 
+     * @param x The x cord of the spot
+     * @param y The y cord of the spot
+     * 
+     * @return The adjacent spots
+     */
+    private DotInfo[] getAdjacent(int x, int y) {
+        ArrayList<DotInfo> temp = new ArrayList<DotInfo>();
+
+        boolean leftGood = false, rightGood = false, upGood = false, downGood = false;
+
+        if (y == 0) {
+            temp.add(this.board[x][y + 1]);
+            downGood = true;
+        } else if (y == this.width - 1) {
+            temp.add(this.board[x][y - 1]);
+            upGood = true;
+        } else {
+            temp.add(this.board[x][y - 1]);
+            temp.add(this.board[x][y + 1]);
+            upGood = true;
+            downGood = true;
+        }
+
+        if (x == 0) {
+            temp.add(this.board[x + 1][y]);
+            rightGood = true;
+        } else if (x == this.height - 1) {
+            temp.add(this.board[x - 1][y]);
+            leftGood = true;
+        } else {
+            temp.add(this.board[x - 1][y]);
+            temp.add(this.board[x + 1][y]);
+            leftGood = true;
+            rightGood = true;
+        }
+
+        if (rightGood && downGood) {
+            temp.add(this.board[x + 1][y + 1]);
+        }
+
+        if (rightGood && upGood) {
+            temp.add(this.board[x + 1][y - 1]);
+        }
+
+        if (leftGood && downGood) {
+            temp.add(this.board[x - 1][y + 1]);
+        }
+
+        if (leftGood && upGood) {
+            temp.add(this.board[x - 1][y - 1]);
+        }
+
+        DotInfo[] ret = new DotInfo[temp.size()];
+        ret = temp.toArray(ret);
+        return ret;
+    }
+
+    private void initializeBoard() {
+        this.board = new DotInfo[width][height];
+
+        // Init DotInfo objects
+        for (int i = 0; i < this.height; i++) {
+            for (int j = 0; j < this.width; j++) {
+                this.board[i][j] = new DotInfo(i, j);
+            }
+        }
+
+        int numTracker = this.numberOfMines;
+        while (numTracker > 0) {
+            int[] pos = this.pickPosition();
+            if (!this.board[pos[0]][pos[1]].isMined()) {
+                this.placeMine(pos);
+                numTracker--;
+            }
+        }
+    }
+
     /**
      * Resets the model to (re)start a game. The previous game (if there is one)
      * is cleared up . 
      */
-    public void reset(){
+    public void reset() {
 
-      // Clear old game data that needs to be
-      this.steps = 0;
+        // Clear old game data that needs to be
+        this.steps = 0;
 
-      // Call init function
-      this.initializeBoard();
+        // Call init function
+        this.initializeBoard();
     }
-
 
     /**
      * Getter method for the heigth of the game
      * 
      * @return the value of the attribute heigthOfGame
-     */   
-    public int getHeigth(){
+     */
+    public int getHeigth() {
         return this.height;
     }
 
@@ -151,12 +174,10 @@ public class GameModel {
      * Getter method for the width of the game
      * 
      * @return the value of the attribute widthOfGame
-     */   
-    public int getWidth(){
-      return this.width;
+     */
+    public int getWidth() {
+        return this.width;
     }
-
-
 
     /**
      * returns true if the dot at location (i,j) is mined, false otherwise
@@ -166,9 +187,9 @@ public class GameModel {
      * @param j
      *            the y coordinate of the dot
      * @return the status of the dot at location (i,j)
-     */   
-    public boolean isMined(int i, int j){
-      return this.board[i][j].isMined();        
+     */
+    public boolean isMined(int i, int j) {
+        return this.board[i][j].isMined();
     }
 
     /**
@@ -180,12 +201,12 @@ public class GameModel {
      * @param j
      *            the y coordinate of the dot
      * @return the status of the dot at location (i,j)
-     */   
-    public boolean hasBeenClicked(int i, int j){
-      return this.board[i][j].hasBeenClicked();
+     */
+    public boolean hasBeenClicked(int i, int j) {
+        return this.board[i][j].hasBeenClicked();
     }
 
-  /**
+    /**
      * returns true if the dot  at location (i,j) has zero mined 
      * neighboor, false otherwise
      * 
@@ -194,10 +215,11 @@ public class GameModel {
      * @param j
      *            the y coordinate of the dot
      * @return the status of the dot at location (i,j)
-     */   
-    public boolean isBlank(int i, int j){
-      return this.board[i][j].getNeighboringMines() == 0;
+     */
+    public boolean isBlank(int i, int j) {
+        return this.board[i][j].getNeighboringMines() == 0;
     }
+
     /**
      * returns true if the dot is covered, false otherwise
     * 
@@ -206,9 +228,9 @@ public class GameModel {
      * @param j
      *            the y coordinate of the dot
      * @return the status of the dot at location (i,j)
-     */   
-    public boolean isCovered(int i, int j){
-      return this.board[i][j].isCovered();
+     */
+    public boolean isCovered(int i, int j) {
+        return this.board[i][j].isCovered();
     }
 
     /**
@@ -220,11 +242,10 @@ public class GameModel {
      * @param j
      *            the y coordinate of the dot
      * @return the number of neighboring mines at location (i,j)
-     */   
-    public int getNeighboringMines(int i, int j){
-      return this.board[i][j].getNeighboringMines();        
+     */
+    public int getNeighboringMines(int i, int j) {
+        return this.board[i][j].getNeighboringMines();
     }
-
 
     /**
      * Sets the status of the dot at location (i,j) to uncovered
@@ -233,9 +254,9 @@ public class GameModel {
      *            the x coordinate of the dot
      * @param j
      *            the y coordinate of the dot
-     */   
-    public void uncover(int i, int j){
-      this.board[i][j].uncover();
+     */
+    public void uncover(int i, int j) {
+        this.board[i][j].uncover();
     }
 
     /**
@@ -245,34 +266,32 @@ public class GameModel {
      *            the x coordinate of the dot
      * @param j
      *            the y coordinate of the dot
-     */   
-    public void click(int i, int j){
-      this.board[i][j].click();        
+     */
+    public void click(int i, int j) {
+        this.board[i][j].click();
     }
 
-     /**
-     * Uncover all remaining covered dot
-     */   
-    public void uncoverAll(){
+    /**
+    * Uncover all remaining covered dot
+    */
+    public void uncoverAll() {
 
-      // Iterate through each board position and uncover
-      for(int i = 0; i < this.width; i++){
-        for(int j = 0; i < this.height; j++){
-          this.board[i][j].uncover();
+        // Iterate through each board position and uncover
+        for (int i = 0; i < this.width; i++) {
+            for (int j = 0; i < this.height; j++) {
+                this.board[i][j].uncover();
+            }
         }
-      }
     }
 
     /**
      * Getter method for the current number of steps
      * 
      * @return the current number of steps
-     */   
-    public int getNumberOfSteps(){
-      return this.steps;        
+     */
+    public int getNumberOfSteps() {
+        return this.steps;
     }
-
-  
 
     /**
      * Getter method for the model's dotInfo reference
@@ -284,58 +303,56 @@ public class GameModel {
      *            the y coordinate of the dot
      *
      * @return model[i][j]
-     */   
+     */
     public DotInfo get(int i, int j) {
-      return this.board[i][j];
+        return this.board[i][j];
     }
 
-
-   /**
+    /**
      * The metod <b>step</b> updates the number of steps. It must be called 
      * once the model has been updated after the player selected a new square.
      */
-     public void step(){
-      this.steps++;
+    public void step() {
+        this.steps++;
     }
- 
-   /**
+
+    /**
      * The metod <b>isFinished</b> returns true if the game is finished, that
      * is, all the nonmined dots are uncovered.
      *
      * @return true if the game is finished, false otherwise
      */
-    public boolean isFinished(){
+    public boolean isFinished() {
 
-      // Iterate through each spot and check if it's uncovered and not mined
-      // If so return false
-      for(int i = 0; i < this.width; i++){
-        for(int j = 0; j < this.height; j++){
-          if(!this.board[i][j].isMined() && !this.board[i][j].isCovered()){
-            return false;
-          }
+        // Iterate through each spot and check if it's uncovered and not mined
+        // If so return false
+        for (int i = 0; i < this.width; i++) {
+            for (int j = 0; j < this.height; j++) {
+                if (!this.board[i][j].isMined() && !this.board[i][j].isCovered()) {
+                    return false;
+                }
+            }
         }
-      }
 
-      return true;
+        return true;
     }
 
-
-   /**
+    /**
      * Builds a String representation of the model
      *
      * @return String representation of the model
      */
-    public String toString(){
+    public String toString() {
         String output = "";
-        for(int i = 0; i < this.width; i++){
-          for(int j = 0; j < this.height; j++){
-            if(this.board[i][j].isMined()){
-              output += "B ";
-            } else {
-              output += this.board[i][j].getNeighboringMines() + " ";
+        for (int i = 0; i < this.width; i++) {
+            for (int j = 0; j < this.height; j++) {
+                if (this.board[i][j].isMined()) {
+                    output += "B ";
+                } else {
+                    output += this.board[i][j].getNeighboringMines() + " ";
+                }
             }
-          }
-          output += "\n";
+            output += "\n";
         }
         return output;
     }
