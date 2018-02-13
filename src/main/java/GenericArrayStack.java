@@ -12,26 +12,38 @@ import java.util.LinkedList;
  */
 public class GenericArrayStack<E> implements Stack<E> {
    
-    private LinkedList<E> stack;
+    private E[] stack;
+    private int topOfStack;
 
    // Constructor
-    public GenericArrayStack() {
-        this.stack = new LinkedList<E>();        
+    public GenericArrayStack(int cap) {
+        @SuppressWarnings("unchecked")
+        E[] temp = (E[]) new Object[cap]; 
+        this.stack = temp;
+        this.topOfStack = -1;       
     }
 
     // Returns true if this ArrayStack is empty
     public boolean isEmpty() {
-        return this.stack.size() == 0;        
+        return this.topOfStack == 0;        
     }
 
     public void push( E elem ) {
-        this.stack.add(elem);        
+        if(this.topOfStack == this.stack.length){
+            return;
+        }
+        this.topOfStack++;
+        this.stack[this.topOfStack] = elem;
     }
     public E pop() {
-        return this.stack.pop();
+        if(this.topOfStack == -1){
+            return null;
+        }
+        this.topOfStack--;
+        return this.stack[this.topOfStack + 1];
     }
 
     public E peek() {
-        return this.stack.peek();
+        return this.stack[this.topOfStack];
     }
 }
