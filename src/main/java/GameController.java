@@ -31,6 +31,7 @@ public class GameController implements ActionListener {
      */
     public GameController(int width, int height, int numberOfMines) {
         this.model = new GameModel(width, height, numberOfMines);
+        DotButton d = new DotButton(1, 1, 1);
         System.out.println(this.model.toString());
     }
 
@@ -69,9 +70,20 @@ public class GameController implements ActionListener {
      *            the selected line
      */
     private void play(int x, int y){
+        DotInfo spot = this.model.get(x, y);
+        
+        // Uncover the spot
+        spot.uncover();
 
-    // ADD YOU CODE HERE
+        // If it's a mine you lose
+        if(spot.isMined()){
+            // TODO you lose
+        }
 
+        // If it's blank start clearing 
+        if(spot.getNeighboringMines() == 0){
+            this.clearZone(spot);
+        }
     }
 
    /**

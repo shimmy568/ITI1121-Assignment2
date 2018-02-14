@@ -51,14 +51,9 @@ public class DotButton extends JButton {
      * modified, all the cells that display the same image reuse the same
      * <b>ImageIcon</b> object. Notice the use of the keyword <b>static</b>.
      */
-    private static final ImageIcon[]icons = new ImageIcon[NUMBER_OF_ICONS];
+    private static final ImageIcon[] icons = new ImageIcon[NUMBER_OF_ICONS];
 
-
-
-
-    // ADD YOUR INSTANCE VARIABLES HERE
-
- 
+    private int iconNumber, column, row;
 
     /**
      * Constructor used for initializing a DotButton at a specific
@@ -73,14 +68,11 @@ public class DotButton extends JButton {
      */
 
     public DotButton(int column, int row, int iconNumber) {
- 
-    // ADD YOU CODE HERE
+        this.column = column;
+        this.row = row;
+        this.iconNumber = iconNumber;
         
-    }
-
- 
-
- 
+    } 
 
     /**
      * Sets the current value of the instance variable iconNumber, and update
@@ -92,9 +84,17 @@ public class DotButton extends JButton {
      */
 
     public void setIconNumber(int iconNumber) {
- 
-    // ADD YOU CODE HERE
-        
+        if(iconNumber >= NUMBER_OF_ICONS){
+            System.out.println("Invalid icon number: " + iconNumber);
+            return;
+        }
+
+        // If hasn't been loaded yet load it
+        if(icons[iconNumber] == null){
+            this.getImageIcon(iconNumber);
+        }
+
+        this.iconNumber = iconNumber;
     }
  
     /**
@@ -104,9 +104,7 @@ public class DotButton extends JButton {
      */
 
     public int getRow() {
- 
-    // ADD YOU CODE HERE
-        
+        return this.row;
     }
 
     /**
@@ -116,26 +114,25 @@ public class DotButton extends JButton {
      */
 
     public int getColumn() {
- 
-    // ADD YOU CODE HERE
-        
+        return this.column;        
     }
 
     /**
      * Returns the <b>ImageIcon</b> reference to use based on
      * the current value of the variable iconNumber. 
      * 
+     * @param icNum The number of the icon to load
+     * 
      * @return the image to be displayed by the button
      */
 
-    private ImageIcon getImageIcon() {
-    
-
-        if (icons[iconNumber] == null) {
-                icons[iconNumber] = new ImageIcon("icons/" + getIconFileName());
+    private ImageIcon getImageIcon(int icNum) {
+        if (icons[icNum] == null) {
+                icons[icNum] = new ImageIcon("icons/" + getIconFileName());
         }
-        return icons[iconNumber];
+        return icons[icNum];
     }
+
     /**
      * This method returns the name of the file containing the image 
      * corresponding to the current value of the variable iconNumber.
