@@ -1,5 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * The class <b>GameController</b> is the controller of the game. It is a listener
@@ -9,8 +11,7 @@ import java.awt.event.ActionListener;
  * @author Guy-Vincent Jourdan, University of Ottawa
  */
 
-
-public class GameController implements ActionListener {
+public class GameController implements MouseListener {
 
     private GameModel model;
     private GameView view;
@@ -33,24 +34,10 @@ public class GameController implements ActionListener {
         this.view.setVisible(true);
     }
 
-
-    /**
-     * Callback used when the user clicks a button (reset or quit)
-     *
-     * @param e
-     *            the ActionEvent
-     */
-
-    public void actionPerformed(ActionEvent e) {
-        DotButton but = (DotButton)e.getSource();
-        this.play(but.getColumn(), but.getRow());
-        this.view.update();
-    }
-
     /**
      * Resets the game and updates the view
      */
-    public void reset(){
+    public void reset() {
         this.model.reset();
         this.view.update();
     }
@@ -68,44 +55,44 @@ public class GameController implements ActionListener {
      * @param y
      *            the selected line
      */
-    private void play(int x, int y){
+    private void play(int x, int y) {
         DotInfo spot = this.model.get(x, y);
 
         // If already uncovered stop now
-        if(!spot.isCovered()){
+        if (!spot.isCovered()) {
             return;
         }
-        
+
         this.model.step();
 
         // Uncover the spot
         spot.uncover();
 
         // If it's a mine you lose
-        if(spot.isMined()){
+        if (spot.isMined()) {
             spot.click();
             this.view.update();// Update before showing dialog so the mine shows while blocking
             boolean again = this.view.askPlayAgain();
-            if(!again){
+            if (!again) {
                 System.exit(0);
-            }else{
+            } else {
                 this.reset();
             }
             return;
         }
 
         // If it's blank start clearing 
-        if(spot.getNeighboringMines() == 0){
+        if (spot.getNeighboringMines() == 0) {
             this.clearZone(spot);
         }
 
         // Check if they player has won and if so let them know
-        if(this.hasWon()){
+        if (this.hasWon()) {
             System.out.println("yay");
         }
     }
 
-   /**
+    /**
      * <b>clearZone</b> is the method that computes which new dots should be ``uncovered'' 
      * when a new square with no mine in its neighborood has been selected
      * @param initialDot
@@ -113,15 +100,16 @@ public class GameController implements ActionListener {
      * had zero neighbouring mines
      */
     private void clearZone(DotInfo initialDot) {
-        GenericArrayStack<DotInfo> stack = new GenericArrayStack<DotInfo>(this.model.getHeigth() * this.model.getWidth());
+        GenericArrayStack<DotInfo> stack = new GenericArrayStack<DotInfo>(
+                this.model.getHeigth() * this.model.getWidth());
         stack.push(initialDot);
         initialDot.uncover();
-        while(!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             DotInfo cur = stack.pop();
-            if(cur.getNeighboringMines() == 0){
+            if (cur.getNeighboringMines() == 0) {
                 DotInfo[] adj = this.model.getAdjacent(cur.getX(), cur.getY());
-                for(int i = 0; i < adj.length; i++){
-                    if(adj[i].isCovered() && adj[i].getNeighboringMines() == 0){
+                for (int i = 0; i < adj.length; i++) {
+                    if (adj[i].isCovered() && adj[i].getNeighboringMines() == 0) {
                         stack.push(adj[i]);
                     }
                     adj[i].uncover();
@@ -130,15 +118,61 @@ public class GameController implements ActionListener {
         }
     }
 
-    private boolean hasWon(){
-        for(int i = 0; i < this.model.getWidth(); i++){
-            for(int o = 0; o < this.model.getHeigth(); o++){
-                if(this.model.get(i, o).isCovered() && !this.model.get(i, o).isMined()){
+    private boolean hasWon() {
+        for (int i = 0; i < this.model.getWidth(); i++) {
+            for (int o = 0; o < this.model.getHeigth(); o++) {
+                if (this.model.get(i, o).isCovered() && !this.model.get(i, o).isMined()) {
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    @Override
+    /**
+     * Triggered when the button is clicked by the mouse
+     * It then triggers the approprite action based on which button
+     * was used to click it
+     * 
+     * @param e - The mouse event object passed from the event
+     */
+    public void mouseClicked(MouseEvent e) {
+        if (e.getButton() == 1) {
+            DotButton but = (DotButton) e.getSource();
+            this.play(but.getColumn(), but.getRow());
+            this.view.update();
+        } else if (e.getButton() == 3) {
+            // TODO right click
+        }
+    }
+
+    @Override
+    /**
+     * Just an empty listener method
+     */
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    /**
+     * Just an empty listener method
+     */
+    public void mouseExited(MouseEvent e) {
+    }
+
+    @Override
+    /**
+     * Just an empty listener method
+     */
+    public void mousePressed(MouseEvent e) {
+    }
+
+    @Override
+    /**
+     * Just an empty listener method
+     */
+    public void mouseReleased(MouseEvent e) {
     }
 
 }

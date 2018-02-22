@@ -59,7 +59,7 @@ public class GameView extends JFrame {
         for (int i = 0; i < gameModel.getWidth(); i++) {
             for (int o = 0; o < gameModel.getHeigth(); o++) {
                 this.dotButtons[i][o] = new DotButton(i, o, getIcon(i, o));
-                this.dotButtons[i][o].addActionListener(this.controller);
+                this.dotButtons[i][o].addMouseListener(this.controller);
                 this.panel.add(this.dotButtons[i][o]);
             }
         }
