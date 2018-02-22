@@ -43,16 +43,16 @@ public class GameController implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         DotButton but = (DotButton)e.getSource();
-        this.model.step();
         this.play(but.getColumn(), but.getRow());
         this.view.update();
     }
 
     /**
-     * resets the game
+     * Resets the game and updates the view
      */
-    private void reset(){
+    public void reset(){
         this.model.reset();
+        this.view.update();
     }
 
     /**
@@ -70,7 +70,14 @@ public class GameController implements ActionListener {
      */
     private void play(int x, int y){
         DotInfo spot = this.model.get(x, y);
+
+        // If already uncovered stop now
+        if(!spot.isCovered()){
+            return;
+        }
         
+        this.model.step();
+
         // Uncover the spot
         spot.uncover();
 
@@ -90,6 +97,11 @@ public class GameController implements ActionListener {
         // If it's blank start clearing 
         if(spot.getNeighboringMines() == 0){
             this.clearZone(spot);
+        }
+
+        // Check if they player has won and if so let them know
+        if(this.hasWon()){
+            System.out.println("yay");
         }
     }
 
@@ -118,6 +130,15 @@ public class GameController implements ActionListener {
         }
     }
 
-
+    private boolean hasWon(){
+        for(int i = 0; i < this.model.getWidth(); i++){
+            for(int o = 0; o < this.model.getHeigth(); o++){
+                if(this.model.get(i, o).isCovered() && !this.model.get(i, o).isMined()){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
 }

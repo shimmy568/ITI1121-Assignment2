@@ -73,7 +73,7 @@ public class GameView extends JFrame {
         restart.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                Minesweeper.game.reset();
             }
         });
         panel.add(restart);
@@ -117,6 +117,7 @@ public class GameView extends JFrame {
      * on the current game model, then redraws the view
      */
     public void update() {
+        this.updateLabel();
         for (int i = 0; i < this.model.getWidth(); i++) {
             for (int o = 0; o < this.model.getHeigth(); o++) {
                 this.dotButtons[i][o].setIconNumber(this.getIcon(i, o));
