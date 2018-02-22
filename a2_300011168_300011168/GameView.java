@@ -114,28 +114,15 @@ public class GameView extends JFrame {
     }
 
     /**
-     * Shows a dialog asking the user to play again with one of two messages
-     * depending on if they won or lost
-     * 
-     * @param lost - True if they lost false if they won
+     * Shows a dialog asking the user to play again
      * 
      * @return True if they want to play again false if they dont
      */
-    public boolean askPlayAgain(boolean lost) {
-
-        String pre, title;
-        if(lost){
-            pre = "Ah dang... You lost in ";
-            title = "Boom!";
-        }else{
-            pre = "Congrats! you won in ";
-            title = "Won";
-        }
-
+    public boolean askPlayAgain() {
         String[] buttonMessages = new String[] { "Quit", "Play Again" };
         int n = JOptionPane.showOptionDialog(this,
-                pre + this.model.getNumberOfSteps() + " steps.\nWould you like to play agian?",
-                title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, buttonMessages,
+                "Ah dang... You lost in " + this.model.getNumberOfSteps() + " steps.\nWould you like to play agian?",
+                "Boom!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, buttonMessages,
                 buttonMessages[1]);
         return n == 1; // Return true if play again was clicked
     }

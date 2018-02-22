@@ -71,7 +71,7 @@ public class GameController implements MouseListener {
             spot.click();
             this.model.setLose();
             this.view.update();// Update before showing dialog so the mine shows while blocking
-            boolean again = this.view.askPlayAgain(true);
+            boolean again = this.view.askPlayAgain();
             if (!again) {
                 System.exit(0);
             } else {
@@ -87,14 +87,7 @@ public class GameController implements MouseListener {
 
         // Check if they player has won and if so let them know
         if (this.hasWon()) {
-            this.view.update();
-            boolean again = this.view.askPlayAgain(false);
-            if (!again) {
-                System.exit(0);
-            } else {
-                this.reset();
-            }
-            return;
+            System.out.println("yay");
         }
     }
 
