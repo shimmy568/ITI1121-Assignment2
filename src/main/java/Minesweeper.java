@@ -10,9 +10,9 @@
 
 public class Minesweeper {
 
-    private static final int DEFAULT_WIDTH = 9;
-    private static final int DEFAULT_HEIGTH = 9;
-    private static final int DEFAULT_MINES = 10;
+    private static final int DEFAULT_WIDTH = 20;
+    private static final int DEFAULT_HEIGTH = 12;
+    private static final int DEFAULT_MINES = 36;
 
    /**
      * <b>main</b> of the application. Creates the instance of  GameController 

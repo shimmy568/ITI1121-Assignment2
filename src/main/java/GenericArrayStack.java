@@ -32,7 +32,7 @@ public class GenericArrayStack<E> implements Stack<E> {
      * @return True if empty false if not
      */
     public boolean isEmpty() {
-        return this.topOfStack == 0;        
+        return this.topOfStack == -1;        
     }
 
     /**
@@ -54,6 +54,7 @@ public class GenericArrayStack<E> implements Stack<E> {
      * @return The element on the top of the stack null if the stack is empty
      */
     public E pop() {
+        System.out.println(this.topOfStack);
         if(this.topOfStack == -1){
             return null;
         }

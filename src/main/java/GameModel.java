@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Random;
 
 /**
@@ -84,7 +83,7 @@ public class GameModel {
         if (y == 0) {
             temp.add(this.board[x][y + 1]);
             downGood = true;
-        } else if (y == this.width - 1) {
+        } else if (y == this.height - 1) {
             temp.add(this.board[x][y - 1]);
             upGood = true;
         } else {
@@ -97,7 +96,7 @@ public class GameModel {
         if (x == 0) {
             temp.add(this.board[x + 1][y]);
             rightGood = true;
-        } else if (x == this.height - 1) {
+        } else if (x == this.width - 1) {
             temp.add(this.board[x - 1][y]);
             leftGood = true;
         } else {
@@ -132,8 +131,8 @@ public class GameModel {
         this.board = new DotInfo[width][height];
 
         // Init DotInfo objects
-        for (int i = 0; i < this.height; i++) {
-            for (int j = 0; j < this.width; j++) {
+        for (int i = 0; i < this.width; i++) {
+            for (int j = 0; j < this.height; j++) {
                 this.board[i][j] = new DotInfo(i, j);
             }
         }
@@ -344,8 +343,8 @@ public class GameModel {
      */
     public String toString() {
         String output = "";
-        for (int i = 0; i < this.width; i++) {
-            for (int j = 0; j < this.height; j++) {
+        for (int j = 0; j < this.height; j++) {
+            for (int i = 0; i < this.width; i++) {
                 if (this.board[i][j].isMined()) {
                     output += "B ";
                 } else {

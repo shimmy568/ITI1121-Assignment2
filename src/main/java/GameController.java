@@ -1,9 +1,5 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
-
-import javax.swing.*;
-
 
 /**
  * The class <b>GameController</b> is the controller of the game. It is a listener
@@ -17,6 +13,7 @@ import javax.swing.*;
 public class GameController implements ActionListener {
 
     private GameModel model;
+    private GameView view;
 
     /**
      * Constructor used for initializing the controller. It creates the game's view 
@@ -31,8 +28,10 @@ public class GameController implements ActionListener {
      */
     public GameController(int width, int height, int numberOfMines) {
         this.model = new GameModel(width, height, numberOfMines);
-        DotButton d = new DotButton(1, 1, 1);
         System.out.println(this.model.toString());
+
+        this.view = new GameView(this.model, this);
+        this.view.setVisible(true);
     }
 
 
@@ -44,9 +43,9 @@ public class GameController implements ActionListener {
      */
 
     public void actionPerformed(ActionEvent e) {
-        
-    // ADD YOU CODE HERE
-
+        DotButton but = (DotButton)e.getSource();
+        this.play(but.getColumn(), but.getRow());
+        this.view.update();
     }
 
     /**
@@ -75,9 +74,11 @@ public class GameController implements ActionListener {
         // Uncover the spot
         spot.uncover();
 
+
         // If it's a mine you lose
         if(spot.isMined()){
-            // TODO you lose
+            spot.click();
+            return;
         }
 
         // If it's blank start clearing 
@@ -96,13 +97,16 @@ public class GameController implements ActionListener {
     private void clearZone(DotInfo initialDot) {
         GenericArrayStack<DotInfo> stack = new GenericArrayStack<DotInfo>(this.model.getHeigth() * this.model.getWidth());
         stack.push(initialDot);
+        initialDot.uncover();
         while(!stack.isEmpty()){
             DotInfo cur = stack.pop();
-            cur.uncover();
             if(cur.getNeighboringMines() == 0){
                 DotInfo[] adj = this.model.getAdjacent(cur.getX(), cur.getY());
                 for(int i = 0; i < adj.length; i++){
-                    stack.push(adj[i]);
+                    if(adj[i].isCovered() && adj[i].getNeighboringMines() == 0){
+                        stack.push(adj[i]);
+                    }
+                    adj[i].uncover();
                 }
             }
         }

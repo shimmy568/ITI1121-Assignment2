@@ -71,6 +71,8 @@ public class DotButton extends JButton {
         this.column = column;
         this.row = row;
         this.iconNumber = iconNumber;
+
+        setBounds(column * 28 + 15, row * 28 + 15, 28, 28);
         
     } 
 
@@ -84,6 +86,7 @@ public class DotButton extends JButton {
      */
 
     public void setIconNumber(int iconNumber) {
+        this.iconNumber = iconNumber;
         if(iconNumber >= NUMBER_OF_ICONS){
             System.out.println("Invalid icon number: " + iconNumber);
             return;
@@ -95,6 +98,7 @@ public class DotButton extends JButton {
         }
 
         this.iconNumber = iconNumber;
+        setIcon(icons[iconNumber]);
     }
  
     /**
@@ -128,7 +132,7 @@ public class DotButton extends JButton {
 
     private ImageIcon getImageIcon(int icNum) {
         if (icons[icNum] == null) {
-                icons[icNum] = new ImageIcon("icons/" + getIconFileName());
+                icons[icNum] = new ImageIcon("src/main/java/icons/" + getIconFileName());
         }
         return icons[icNum];
     }
