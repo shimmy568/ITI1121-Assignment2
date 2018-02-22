@@ -9,7 +9,12 @@ import javax.swing.*;
  * <b>JFrame</b> and lays out an instance of  <b>BoardView</b> (the actual game) and 
  * two instances of JButton. The action listener for the buttons is the controller.
  *
- * @author Guy-Vincent Jourdan, University of Ottawa
+ *
+ * @author Owen Anderson
+ * Student number: 300011168
+ * Course: ITI 1121-A
+ * Assignment: 2
+ *
  */
 
 public class GameView extends JFrame {
@@ -114,15 +119,28 @@ public class GameView extends JFrame {
     }
 
     /**
-     * Shows a dialog asking the user to play again
+     * Shows a dialog asking the user to play again with one of two messages
+     * depending on if they won or lost
+     * 
+     * @param lost - True if they lost false if they won
      * 
      * @return True if they want to play again false if they dont
      */
-    public boolean askPlayAgain() {
+    public boolean askPlayAgain(boolean lost) {
+
+        String pre, title;
+        if(lost){
+            pre = "Ah dang... You lost in ";
+            title = "Boom!";
+        }else{
+            pre = "Congrats! you won in ";
+            title = "Won";
+        }
+
         String[] buttonMessages = new String[] { "Quit", "Play Again" };
         int n = JOptionPane.showOptionDialog(this,
-                "Ah dang... You lost in " + this.model.getNumberOfSteps() + " steps.\nWould you like to play agian?",
-                "Boom!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, buttonMessages,
+                pre + this.model.getNumberOfSteps() + " steps.\nWould you like to play agian?",
+                title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, buttonMessages,
                 buttonMessages[1]);
         return n == 1; // Return true if play again was clicked
     }

@@ -9,7 +9,12 @@ import javax.swing.*;
  * <b>JFrame</b> and lays out an instance of  <b>BoardView</b> (the actual game) and 
  * two instances of JButton. The action listener for the buttons is the controller.
  *
- * @author Guy-Vincent Jourdan, University of Ottawa
+ *
+ * @author Owen Anderson
+ * Student number: 300011168
+ * Course: ITI 1121-A
+ * Assignment: 2
+ *
  */
 
 public class GameView extends JFrame {

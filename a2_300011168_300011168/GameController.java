@@ -6,7 +6,11 @@ import java.awt.event.MouseListener;
  * of the view, and has a method <b>play</b> which computes the next
  * step of the game, and  updates model and view.
  *
- * @author Guy-Vincent Jourdan, University of Ottawa
+ * @author Owen Anderson
+ * Student number: 300011168
+ * Course: ITI 1121-A
+ * Assignment: 2
+ *
  */
 
 public class GameController implements MouseListener {
@@ -71,7 +75,7 @@ public class GameController implements MouseListener {
             spot.click();
             this.model.setLose();
             this.view.update();// Update before showing dialog so the mine shows while blocking
-            boolean again = this.view.askPlayAgain();
+            boolean again = this.view.askPlayAgain(true);
             if (!again) {
                 System.exit(0);
             } else {
@@ -87,7 +91,14 @@ public class GameController implements MouseListener {
 
         // Check if they player has won and if so let them know
         if (this.hasWon()) {
-            System.out.println("yay");
+            this.view.update();
+            boolean again = this.view.askPlayAgain(false);
+            if (!again) {
+                System.exit(0);
+            } else {
+                this.reset();
+            }
+            return;
         }
     }
 

@@ -15,7 +15,11 @@ import javax.swing.JButton;
  * icons seems to be someone called 
  * <a href="https://commons.wikimedia.org/wiki/User:Cryosta">Kazukiokumura</a>.
  *
- * @author Guy-Vincent Jourdan, University of Ottawa
+ * @author Owen Anderson
+ * Student number: 300011168
+ * Course: ITI 1121-A
+ * Assignment: 2
+ *
  */
 
 public class DotButton extends JButton {

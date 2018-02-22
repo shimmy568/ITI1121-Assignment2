@@ -12,7 +12,7 @@ public class Minesweeper {
 
     private static final int DEFAULT_WIDTH = 20;
     private static final int DEFAULT_HEIGTH = 12;
-    private static final int DEFAULT_MINES = 36;
+    private static final int DEFAULT_MINES = 3;
     public static GameController game;
 
    /**

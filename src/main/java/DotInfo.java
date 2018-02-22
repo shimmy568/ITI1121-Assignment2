@@ -4,7 +4,11 @@
  * the state (e.g. clicked, mined, number of neighbooring mines...) 
  * at the dot position (x,y)
  *
- * @author Guy-Vincent Jourdan, University of Ottawa
+ * @author Owen Anderson
+ * Student number: 300011168
+ * Course: ITI 1121-A
+ * Assignment: 2
+ *
  */
 
 public class DotInfo {
