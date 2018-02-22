@@ -247,7 +247,7 @@ public class GameModel {
      * @return the status of the dot at location (i,j)
      */
     public boolean isBlank(int i, int j) {
-        return this.board[i][j].getNeighboringMines() == 0;
+        return this.board[i][j].getNeighbooringMines() == 0;
     }
 
     /**
@@ -273,8 +273,8 @@ public class GameModel {
      *            the y coordinate of the dot
      * @return the number of neighboring mines at location (i,j)
      */
-    public int getNeighboringMines(int i, int j) {
-        return this.board[i][j].getNeighboringMines();
+    public int getNeighbooringMines(int i, int j) {
+        return this.board[i][j].getNeighbooringMines();
     }
 
     /**
@@ -379,7 +379,7 @@ public class GameModel {
                 if (this.board[i][j].isMined()) {
                     output += "B ";
                 } else {
-                    output += this.board[i][j].getNeighboringMines() + " ";
+                    output += this.board[i][j].getNeighbooringMines() + " ";
                 }
             }
             output += "\n";

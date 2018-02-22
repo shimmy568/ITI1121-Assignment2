@@ -170,7 +170,7 @@ public class GameView extends JFrame {
         } else if (spot.isMined() && spot.hasBeenClicked()) {
             return 10;
         } else {
-            return spot.getNeighboringMines();
+            return spot.getNeighbooringMines();
         }
     }
 }

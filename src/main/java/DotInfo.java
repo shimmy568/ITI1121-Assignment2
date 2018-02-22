@@ -104,7 +104,7 @@ public class DotInfo {
      * @param neighboringMines
      *          number of neighbooring mines
      */
-    public void setNeighboringMines(int neighboringMines) {
+    public void setNeighbooringMines(int neighboringMines) {
         this.neighboringMines = neighboringMines;
     }
 
@@ -121,7 +121,7 @@ public class DotInfo {
      *
      * @return neighboringMines
      */
-    public int getNeighboringMines() {
+    public int getNeighbooringMines() {
         return this.neighboringMines;
     }
 

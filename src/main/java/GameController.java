@@ -81,7 +81,7 @@ public class GameController implements MouseListener {
         }
 
         // If it's blank start clearing 
-        if (spot.getNeighboringMines() == 0) {
+        if (spot.getNeighbooringMines() == 0) {
             this.clearZone(spot);
         }
 
@@ -105,10 +105,10 @@ public class GameController implements MouseListener {
         initialDot.uncover();
         while (!stack.isEmpty()) {
             DotInfo cur = stack.pop();
-            if (cur.getNeighboringMines() == 0) {
+            if (cur.getNeighbooringMines() == 0) {
                 DotInfo[] adj = this.model.getAdjacent(cur.getX(), cur.getY());
                 for (int i = 0; i < adj.length; i++) {
-                    if (adj[i].isCovered() && adj[i].getNeighboringMines() == 0) {
+                    if (adj[i].isCovered() && adj[i].getNeighbooringMines() == 0) {
                         stack.push(adj[i]);
                     }
                     if(!adj[i].isFlagged()){
