@@ -54,7 +54,6 @@ public class GenericArrayStack<E> implements Stack<E> {
      * @return The element on the top of the stack null if the stack is empty
      */
     public E pop() {
-        System.out.println(this.topOfStack);
         if(this.topOfStack == -1){
             return null;
         }

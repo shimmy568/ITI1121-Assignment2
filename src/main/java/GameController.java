@@ -28,7 +28,6 @@ public class GameController implements ActionListener {
      */
     public GameController(int width, int height, int numberOfMines) {
         this.model = new GameModel(width, height, numberOfMines);
-        System.out.println(this.model.toString());
 
         this.view = new GameView(this.model, this);
         this.view.setVisible(true);
@@ -44,6 +43,7 @@ public class GameController implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         DotButton but = (DotButton)e.getSource();
+        this.model.step();
         this.play(but.getColumn(), but.getRow());
         this.view.update();
     }
@@ -74,10 +74,16 @@ public class GameController implements ActionListener {
         // Uncover the spot
         spot.uncover();
 
-
         // If it's a mine you lose
         if(spot.isMined()){
             spot.click();
+            this.view.update();// Update before showing dialog so the mine shows while blocking
+            boolean again = this.view.askPlayAgain();
+            if(!again){
+                System.exit(0);
+            }else{
+                this.reset();
+            }
             return;
         }
 
