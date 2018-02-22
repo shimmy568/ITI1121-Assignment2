@@ -19,7 +19,7 @@ public class GameView extends JFrame {
     private GameModel model;
     private GameController controller;
     private JPanel panel;
-    private JLabel label;
+    private JLabel stepsLabel, minesLabel;
 
     /**
      * Constructor used for initializing the Frame
@@ -40,17 +40,23 @@ public class GameView extends JFrame {
         setLayout(new BorderLayout());
 
         this.panel = new JPanel();
-        this.panel.setPreferredSize(new Dimension(28 * gameModel.getWidth() + 30, 28 * gameModel.getHeigth() + 15));
+        this.panel.setPreferredSize(new Dimension(28 * gameModel.getWidth() + 30, 28 * gameModel.getHeigth()));
         add(this.panel, BorderLayout.CENTER);
 
-        this.label = new JLabel();
-        this.updateLabel();
-
+        this.stepsLabel = new JLabel();
+        this.updateStepsLabel();
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 15));
         add(bottomPanel, BorderLayout.PAGE_END);
-        bottomPanel.add(this.label);
+        bottomPanel.add(this.stepsLabel);
+
 
         this.initBottomPanelButtons(bottomPanel);
+
+        this.minesLabel = new JLabel();
+        this.updateMinesLabel();
+        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 15));
+        topPanel.add(minesLabel);
+        add(topPanel, BorderLayout.PAGE_START);
 
         this.panel.setLayout(null);
 
@@ -99,8 +105,12 @@ public class GameView extends JFrame {
     /**
      * Updates the label at the bottom based of the step counter in the model
      */
-    private void updateLabel() {
-        this.label.setText("Number of steps: " + this.model.getNumberOfSteps());
+    private void updateStepsLabel() {
+        this.stepsLabel.setText("Number of steps: " + this.model.getNumberOfSteps());
+    }
+
+    private void updateMinesLabel(){
+        this.minesLabel.setText("Number of mines left: " + this.model.getMinesLeft());
     }
 
     /**
@@ -122,7 +132,8 @@ public class GameView extends JFrame {
      * on the current game model, then redraws the view
      */
     public void update() {
-        this.updateLabel();
+        this.updateStepsLabel();
+        this.updateMinesLabel();
         for (int i = 0; i < this.model.getWidth(); i++) {
             for (int o = 0; o < this.model.getHeigth(); o++) {
                 this.dotButtons[i][o].setIconNumber(this.getIcon(i, o));
@@ -162,12 +173,4 @@ public class GameView extends JFrame {
             return spot.getNeighboringMines();
         }
     }
-
-    /**
-     * Reveals all the mines on the board, used when the play loses
-     */
-	public void revealAllMines() {
-
-	}
-
 }

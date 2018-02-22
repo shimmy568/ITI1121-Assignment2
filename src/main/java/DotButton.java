@@ -68,7 +68,7 @@ public class DotButton extends JButton {
         this.row = row;
         this.iconNumber = iconNumber;
 
-        setBounds(column * 28 + 15, row * 28 + 15, 28, 28);
+        setBounds(column * 28 + 15, row * 28, 28, 28);
         
     } 
 

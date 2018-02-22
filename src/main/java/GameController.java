@@ -111,7 +111,9 @@ public class GameController implements MouseListener {
                     if (adj[i].isCovered() && adj[i].getNeighboringMines() == 0) {
                         stack.push(adj[i]);
                     }
-                    adj[i].uncover();
+                    if(!adj[i].isFlagged()){
+                        adj[i].uncover();
+                    }
                 }
             }
         }
@@ -149,8 +151,8 @@ public class GameController implements MouseListener {
         } else if (e.getButton() == 3) {
             // If right click and covered toggle the flagged state
             DotButton but = (DotButton) e.getSource();
-            if(this.model.get(but.getColumn(), but.getRow()).isCovered()){
-                this.model.get(but.getColumn(), but.getRow()).toggleFlagged();
+            if(this.model.get(but.getColumn(), but.getRow()).isFlagged() || this.model.get(but.getColumn(), but.getRow()).isCovered()){
+                this.model.toggleMineFlag(but.getColumn(), but.getRow());
                 this.view.update();
             }
         }

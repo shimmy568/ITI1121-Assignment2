@@ -23,7 +23,7 @@ import java.util.Random;
 
 public class GameModel {
 
-    private int width, height, numberOfMines, steps;
+    private int width, height, numberOfMines, steps, minesLeft;
     private Random generator;
     private DotInfo[][] board;
     private boolean lost;
@@ -46,6 +46,7 @@ public class GameModel {
         this.numberOfMines = numberOfMines;
         this.generator = new Random();
         this.lost = false;
+        this.minesLeft = numberOfMines;
         this.initializeBoard();
     }
 
@@ -158,6 +159,7 @@ public class GameModel {
         // Clear old game data that needs to be
         this.steps = 0;
         this.lost = false;
+        this.minesLeft = this.numberOfMines;
 
         // Call init function
         this.initializeBoard();
@@ -192,6 +194,32 @@ public class GameModel {
      */
     public boolean isMined(int i, int j) {
         return this.board[i][j].isMined();
+    }
+
+    /**
+     * Toggles a flagged mine at a given position and
+     * updates the minesLeft tracker
+     * 
+     * @param x - The x position of the spot to flag
+     * @param y - The y position of the spot to flag
+     */
+    public void toggleMineFlag(int x, int y){
+        if(this.board[x][y].isFlagged()){
+            this.minesLeft++;
+        }else{
+            this.minesLeft--;
+        }
+
+        this.board[x][y].toggleFlagged();
+    }
+
+    /**
+     * Returns the number of unflagged mines
+     * 
+     * @return - The mines left counter
+     */
+    public int getMinesLeft(){
+        return this.minesLeft;
     }
 
     /**
