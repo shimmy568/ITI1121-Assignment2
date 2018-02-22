@@ -56,8 +56,8 @@ public class GameController implements MouseListener {
     private void play(int x, int y) {
         DotInfo spot = this.model.get(x, y);
 
-        // If already uncovered stop now
-        if (!spot.isCovered()) {
+        // If already uncovered or flagged stop now
+        if (!spot.isCovered() || spot.isFlagged()) {
             return;
         }
 
@@ -69,6 +69,7 @@ public class GameController implements MouseListener {
         // If it's a mine you lose
         if (spot.isMined()) {
             spot.click();
+            this.model.setLose();
             this.view.update();// Update before showing dialog so the mine shows while blocking
             boolean again = this.view.askPlayAgain();
             if (!again) {
@@ -116,6 +117,11 @@ public class GameController implements MouseListener {
         }
     }
 
+    /**
+     * Checks if the player has won the game
+     * 
+     * @return True if they have won false if not
+     */
     private boolean hasWon() {
         for (int i = 0; i < this.model.getWidth(); i++) {
             for (int o = 0; o < this.model.getHeigth(); o++) {
@@ -141,7 +147,12 @@ public class GameController implements MouseListener {
             this.play(but.getColumn(), but.getRow());
             this.view.update();
         } else if (e.getButton() == 3) {
-            // TODO right click
+            // If right click and covered toggle the flagged state
+            DotButton but = (DotButton) e.getSource();
+            if(this.model.get(but.getColumn(), but.getRow()).isCovered()){
+                this.model.get(but.getColumn(), but.getRow()).toggleFlagged();
+                this.view.update();
+            }
         }
     }
 

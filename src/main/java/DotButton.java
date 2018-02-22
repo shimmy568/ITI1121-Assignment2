@@ -1,10 +1,5 @@
-import java.awt.Color;
-import java.awt.Dimension;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.BorderFactory;
-import javax.swing.border.Border;
 
 /**
  * In the application <b>Minesweeper</b>, a <b>DotButton</b> is a specialized type of
@@ -27,7 +22,8 @@ public class DotButton extends JButton {
 
 
 
-     /**
+     private static final long serialVersionUID = 6569377516765451278L;
+	/**
      * predefined values to capture icons of a DotInfo
      */
 

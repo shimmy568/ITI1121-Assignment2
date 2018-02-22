@@ -42,7 +42,7 @@ public class GameView extends JFrame {
         this.panel = new JPanel();
         this.panel.setPreferredSize(new Dimension(28 * gameModel.getWidth() + 30, 28 * gameModel.getHeigth() + 15));
         add(this.panel, BorderLayout.CENTER);
-        
+
         this.label = new JLabel();
         this.updateLabel();
 
@@ -68,9 +68,14 @@ public class GameView extends JFrame {
         update();
     }
 
-    private void initBottomPanelButtons(JPanel panel){
+    /**
+     * Creates and sets up the buttons on the bottom of the board
+     * 
+     * @param panel - The panel that sits at the bottom, will have the buttons added to it
+     */
+    private void initBottomPanelButtons(JPanel panel) {
         JButton restart = new JButton("Reset");
-        restart.addActionListener(new ActionListener(){
+        restart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Minesweeper.game.reset();
@@ -80,7 +85,7 @@ public class GameView extends JFrame {
 
         // Add quit button
         JButton quit = new JButton("Quit");
-        quit.addActionListener(new ActionListener(){
+        quit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
@@ -91,7 +96,10 @@ public class GameView extends JFrame {
         // Add restart button
     }
 
-    private void updateLabel(){
+    /**
+     * Updates the label at the bottom based of the step counter in the model
+     */
+    private void updateLabel() {
         this.label.setText("Number of steps: " + this.model.getNumberOfSteps());
     }
 
@@ -100,15 +108,12 @@ public class GameView extends JFrame {
      * 
      * @return True if they want to play again false if they dont
      */
-    public boolean askPlayAgain(){
-        String[] buttonMessages = new String[]{"Quit", "Play Again"};
-        int n = JOptionPane.showOptionDialog(this, "Ah dang... You lost in " + this.model.getNumberOfSteps() + " steps.\nWould you like to play agian?",
-            "Boom!",
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE,
-            null,
-            buttonMessages,
-            buttonMessages[1]);
+    public boolean askPlayAgain() {
+        String[] buttonMessages = new String[] { "Quit", "Play Again" };
+        int n = JOptionPane.showOptionDialog(this,
+                "Ah dang... You lost in " + this.model.getNumberOfSteps() + " steps.\nWould you like to play agian?",
+                "Boom!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, buttonMessages,
+                buttonMessages[1]);
         return n == 1; // Return true if play again was clicked
     }
 
@@ -138,15 +143,31 @@ public class GameView extends JFrame {
      * @return the icon to use for the dot at location (i,j)
      */
     private int getIcon(int i, int j) {
-        if (this.model.get(i, j).isCovered()) {
+        DotInfo spot = this.model.get(i, j);
+
+        // Special case for when the game is in the lost state
+        if(this.model.getLose()){
+            if(spot.isMined() && !spot.hasBeenClicked()){
+                return 9; 
+            }
+        }
+
+        if (spot.isFlagged()) {
+            return 12;
+        } else if (spot.isCovered()) {
             return 11;
-        } else if (this.model.get(i, j).isMined() && this.model.get(i, j).hasBeenClicked()) {
+        } else if (spot.isMined() && spot.hasBeenClicked()) {
             return 10;
-        } else if (this.model.get(i, j).isMined()) {
-            return 9;
         } else {
-            return this.model.get(i, j).getNeighboringMines();
+            return spot.getNeighboringMines();
         }
     }
+
+    /**
+     * Reveals all the mines on the board, used when the play loses
+     */
+	public void revealAllMines() {
+
+	}
 
 }

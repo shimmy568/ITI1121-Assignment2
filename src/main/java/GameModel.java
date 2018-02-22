@@ -26,6 +26,7 @@ public class GameModel {
     private int width, height, numberOfMines, steps;
     private Random generator;
     private DotInfo[][] board;
+    private boolean lost;
 
     /**
      * Constructor to initialize the model to a given size of board.
@@ -44,6 +45,7 @@ public class GameModel {
         this.height = heigth;
         this.numberOfMines = numberOfMines;
         this.generator = new Random();
+        this.lost = false;
         this.initializeBoard();
     }
 
@@ -155,6 +157,7 @@ public class GameModel {
 
         // Clear old game data that needs to be
         this.steps = 0;
+        this.lost = false;
 
         // Call init function
         this.initializeBoard();
@@ -354,5 +357,21 @@ public class GameModel {
             output += "\n";
         }
         return output;
+    }
+
+    /**
+     * Sets the lost state of the game to true
+     */
+    public void setLose(){
+        this.lost = true;
+    }
+
+    /**
+     * Gets weather the game is in the lost state or not
+     * 
+     * @return - The lost state of the game
+     */
+    public boolean getLose(){
+        return this.lost;
     }
 }

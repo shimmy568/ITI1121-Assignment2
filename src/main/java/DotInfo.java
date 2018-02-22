@@ -10,8 +10,7 @@
 public class DotInfo {
 
     private int x, y, neighboringMines;
-    private boolean mined, covered, wasClicked;
-    
+    private boolean mined, covered, wasClicked, flagged;
 
     /**
      * Constructor, used to initialize the instance variables
@@ -124,6 +123,22 @@ public class DotInfo {
      */
     public int getNeighboringMines() {
         return this.neighboringMines;
+    }
+
+    /**
+     * Gets weather the spot is flagged or not
+     * 
+     * @return The state of the flaggyness (True if it has a flag on it false if not)
+     */
+    public boolean isFlagged(){
+        return this.flagged;
+    }
+
+    /**
+     * Toggles the flagged var from false to true or true to false
+     */
+    public void toggleFlagged(){
+        this.flagged = !this.flagged;
     }
 
  }
