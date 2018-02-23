@@ -50,6 +50,11 @@ public class GameModel {
         this.initializeBoard();
     }
 
+    /**
+     * Picks a random x and y position on the board
+     * 
+     * @return A list with index 0 and x and index 1 as y
+     */
     private int[] pickPosition() {
         int[] cords = new int[2];
         cords[0] = this.generator.nextInt(this.width);
@@ -57,6 +62,12 @@ public class GameModel {
         return cords;
     }
 
+    /**
+     * Places a mine and keeps track of the neighboring mines
+     * for adjacent mines
+     * 
+     * @param pos - The position index 0 is x index 1 is y
+     */
     private void placeMine(int[] pos) {
         int x = pos[0];
         int y = pos[1];
@@ -130,6 +141,9 @@ public class GameModel {
         return ret;
     }
 
+    /**
+     * Sets up the board and places all the mines
+     */
     private void initializeBoard() {
         this.board = new DotInfo[width][height];
 

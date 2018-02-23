@@ -16,7 +16,6 @@ import javax.swing.*;
  * Assignment: 2
  *
  */
-
 public class GameView extends JFrame {
 
     private static final long serialVersionUID = -4418557344980102586L;
@@ -114,6 +113,9 @@ public class GameView extends JFrame {
         this.stepsLabel.setText("Number of steps: " + this.model.getNumberOfSteps());
     }
 
+    /**
+     * Updates the label at the top based on the mines left
+     */
     private void updateMinesLabel(){
         this.minesLabel.setText("Number of mines left: " + this.model.getMinesLeft());
     }
