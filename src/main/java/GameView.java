@@ -37,6 +37,7 @@ public class GameView extends JFrame {
         this.model = gameModel;
         this.controller = gameController;
 
+        StudentInfo.display();
         setTitle("MineSweeper");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //setSize(this.model.getWidth() * 28, this.model.getHeigth() * 28);
