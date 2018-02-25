@@ -90,7 +90,7 @@ public class GameController implements MouseListener {
         }
 
         // Check if they player has won and if so let them know
-        if (this.hasWon()) {
+        if (this.model.isFinished()) {
             this.view.update();
             boolean again = this.view.askPlayAgain(false);
             if (!again) {
@@ -128,22 +128,6 @@ public class GameController implements MouseListener {
                 }
             }
         }
-    }
-
-    /**
-     * Checks if the player has won the game
-     * 
-     * @return True if they have won false if not
-     */
-    private boolean hasWon() {
-        for (int i = 0; i < this.model.getWidth(); i++) {
-            for (int o = 0; o < this.model.getHeigth(); o++) {
-                if (this.model.get(i, o).isCovered() && !this.model.get(i, o).isMined()) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     @Override

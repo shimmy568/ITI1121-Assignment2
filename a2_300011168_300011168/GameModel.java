@@ -368,16 +368,13 @@ public class GameModel {
      */
     public boolean isFinished() {
 
-        // Iterate through each spot and check if it's uncovered and not mined
-        // If so return false
-        for (int i = 0; i < this.width; i++) {
-            for (int j = 0; j < this.height; j++) {
-                if (!this.board[i][j].isMined() && !this.board[i][j].isCovered()) {
+        for (int i = 0; i < this.getWidth(); i++) {
+            for (int o = 0; o < this.getHeigth(); o++) {
+                if (this.get(i, o).isCovered() && !this.get(i, o).isMined()) {
                     return false;
                 }
             }
         }
-
         return true;
     }
 
